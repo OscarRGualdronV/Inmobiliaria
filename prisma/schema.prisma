@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendedor {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  email     String     @unique
+  password  String
+  telefono  String?
+  whatsapp  String?
+  activo    Boolean    @default(true)
+  creadoEn  DateTime   @default(now())
+  
+  inmuebles Inmueble[]
+}
+
+model Inmueble {
+  id             Int          @id @default(autoincrement())
+  titulo         String
+  descripcion    String?
+  tipo           TipoInmueble
+  precio         Int
+  moneda         Moneda       @default(COP)
+  area           Float?
+  areaUnidad     AreaUnidad   @default(METROS_CUADRADOS)
+  habitaciones   Int?
+  banos          Int?
+  pisos          Int?
+  antiguedad     Int?         // en años
+  estrato        Int?
+  tieneGaraje    Boolean      @default(false)
+  amoblado       Boolean      @default(false)
+  
+  imagenes       String[]     @db.Text
+  direccion      String?
+  ciudad         String?
+  departamento   String?
+  lat            Float?
+  lng            Float?
+  
+  publicadoEn    DateTime     @default(now())
+  actualizadoEn  DateTime     @updatedAt
+  estado         EstadoInmueble @default(DISPONIBLE)
+  destacado      Boolean      @default(false)
+  
+  // Estadísticas
+  vistas         Int          @default(0)
+  
+  // Relaciones
+  vendedorId     Int
+  vendedor       Vendedor     @relation(fields: [vendedorId], references: [id], onDelete: Cascade)
+  
+  // Características adicionales para predios rurales
+  topografia     Topografia?
+  accesoAgua     Boolean      @default(false)
+  accesoLuz      Boolean      @default(false)
+  viaAcceso      ViaAcceso?
+  cultivos       String?      // Tipos de cultivos existentes
+  
+  // Índices
+  @@index([tipo])
+  @@index([ciudad])
+  @@index([precio])
+  @@index([estado])
+  @@index([destacado])
+}
+
+enum TipoInmueble {
+  APARTAMENTO
+  CASA
+  LOTE_URBANO
+  PREDIO_RURAL
+  FINCA
+  OFICINA
+  LOCAL_COMERCIAL
+  BODEGA
+  OTRO
+}
+
+enum EstadoInmueble {
+  DISPONIBLE
+  VENDIDO
+  RESERVADO
+}
+
+enum Moneda {
+  COP
+  USD
+}
+
+enum AreaUnidad {
+  METROS_CUADRADOS
+  HECTAREAS
+}
+
+enum Topografia {
+  PLANA
+  ONDULADA
+  QUEBRADA
+  MONTANOSA
+}
+
+enum ViaAcceso {
+  PAVIMENTADA
+  DESTAPADA
+  TROCHA
+  FLUVIAL
+}
