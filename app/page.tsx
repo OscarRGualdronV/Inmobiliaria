@@ -49,7 +49,9 @@ export default async function Home() {
               <div className="text-4xl font-bold text-blue-800 mb-3">
                 {stats.totalProperties}+
               </div>
-              <p className="text-gray-600 font-medium">Propiedades Disponibles</p>
+              <p className="text-gray-600 font-medium">
+                Propiedades Disponibles
+              </p>
             </div>
             <div className="text-center bg-white p-8 rounded-lg shadow-md">
               <div className="text-4xl font-bold text-blue-800 mb-3">
@@ -67,18 +69,20 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Propiedades Destacadas */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Propiedades Destacadas
-          </h2>
-          <p className="text-white text-lg max-w-2xl mx-auto">
-            Descubre nuestras mejores propiedades seleccionadas especialmente
-            para ti
-          </p>
+      {/* Propiedades Destacadas - CORREGIDO */}
+      <div className="bg-white">
+        <div className="container mx-auto px-4 py-20">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Propiedades <span className="text-blue-900">Destacadas</span>
+            </h2>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+              Descubre nuestras mejores propiedades seleccionadas especialmente
+              para ti
+            </p>
+          </div>
+          <FeaturedProperties properties={featuredProperties} />
         </div>
-        <FeaturedProperties properties={featuredProperties} />
       </div>
 
       {/* Categorías */}

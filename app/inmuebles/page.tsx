@@ -277,51 +277,56 @@ export default function InmueblesPage() {
             </div>
           </div>
 
-          {/* Botones de acción */}
-          <div className="flex justify-between items-center mt-6 pt-6 border-t border-gray-200">
-            <div className="flex items-center space-x-4">
-              <select
-                value={filters.minHabitaciones}
-                onChange={(e) => setFilters({ ...filters, minHabitaciones: e.target.value })}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
-              >
-                <option value="">Habitaciones</option>
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <option key={num} value={num}>
-                    {num}+
-                  </option>
-                ))}
-              </select>
+          {/* Botones de acción - FIJADO AQUÍ EL PROBLEMA */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            {/* Filtros adicionales en móvil - reordenados */}
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0">
+              {/* Filtros de habitaciones y baños */}
+              <div className="flex flex-wrap gap-3">
+                <select
+                  value={filters.minHabitaciones}
+                  onChange={(e) => setFilters({ ...filters, minHabitaciones: e.target.value })}
+                  className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm w-full md:w-auto"
+                >
+                  <option value="">Habitaciones</option>
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <option key={num} value={num}>
+                      {num}+
+                    </option>
+                  ))}
+                </select>
 
-              <select
-                value={filters.minBanos}
-                onChange={(e) => setFilters({ ...filters, minBanos: e.target.value })}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
-              >
-                <option value="">Baños</option>
-                {[1, 2, 3, 4].map((num) => (
-                  <option key={num} value={num}>
-                    {num}+
-                  </option>
-                ))}
-              </select>
-            </div>
+                <select
+                  value={filters.minBanos}
+                  onChange={(e) => setFilters({ ...filters, minBanos: e.target.value })}
+                  className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm w-full md:w-auto"
+                >
+                  <option value="">Baños</option>
+                  {[1, 2, 3, 4].map((num) => (
+                    <option key={num} value={num}>
+                      {num}+
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="flex space-x-3">
-              <button
-                onClick={resetFilters}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Limpiar filtros
-              </button>
-              <a
-                href="https://wa.me/573001234567"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
-              >
-                Contactar asesor
-              </a>
+              {/* Botones de acción - AHORA RESPONSIVOS */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <button
+                  onClick={resetFilters}
+                  className="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm w-full sm:w-auto"
+                >
+                  Limpiar filtros
+                </button>
+                <a
+                  href="https://wa.me/573001234567"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-center text-sm w-full sm:w-auto"
+                >
+                  Contactar asesor
+                </a>
+              </div>
             </div>
           </div>
         </div>
