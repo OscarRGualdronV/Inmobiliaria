@@ -85,7 +85,22 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(inmueble);
+    // Configurar headers para evitar cache
+    const response = NextResponse.json(inmueble);
+    
+    // Headers para prevenir cache en el cliente
+    response.headers.set(
+      'Cache-Control',
+      'no-store, max-age=0, must-revalidate'
+    );
+    
+    // Header específico para Next.js
+    response.headers.set(
+      'x-vercel-revalidate',
+      'true'
+    );
+
+    return response;
   } catch (error) {
     console.error("Error actualizando inmueble:", error);
     return NextResponse.json(
