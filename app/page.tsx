@@ -4,11 +4,15 @@ import PropertyCategories from "@/components/dashboard/public/PropertyCategories
 import CTASection from "@/components/dashboard/public/CTASection";
 import { prisma } from "@/lib/prisma";
 
+// ✅ AGREGAR ESTAS 2 LÍNEAS (lo más importante)
+export const revalidate = 30; // Revalidar cada 30 segundos
+export const dynamic = 'force-dynamic'; // Forzar actualización dinámica
+
 export default async function Home() {
-  // Obtener inmuebles destacados
+  // Obtener inmuebles destacados - YA TIENE EL FILTRO CORRECTO ✅
   const featuredProperties = await prisma.inmueble.findMany({
     where: {
-      estado: "DISPONIBLE",
+      estado: "DISPONIBLE", // ← ESTO ESTÁ BIEN
       destacado: true,
     },
     take: 6,
@@ -23,16 +27,19 @@ export default async function Home() {
     orderBy: { publicadoEn: "desc" },
   });
 
-  // Obtener estadísticas
+  // Obtener estadísticas - TAMBIÉN NECESITAN FILTRO
   const stats = {
     totalProperties: await prisma.inmueble.count({
-      where: { estado: "DISPONIBLE" },
+      where: { estado: "DISPONIBLE" }, // ← ESTO ESTÁ BIEN
     }),
     soldProperties: await prisma.inmueble.count({
       where: { estado: "VENDIDO" },
     }),
     ruralProperties: await prisma.inmueble.count({
-      where: { tipo: "PREDIO_RURAL" },
+      where: { 
+        tipo: "PREDIO_RURAL",
+        estado: "DISPONIBLE" // ← AGREGAR FILTRO AQUÍ TAMBIÉN
+      },
     }),
   };
 
@@ -69,7 +76,7 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Propiedades Destacadas - CORREGIDO */}
+      {/* Propiedades Destacadas */}
       <div className="bg-white">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center mb-16">
